@@ -111,6 +111,7 @@ $(function () {
         })
         loadFeed(1,done)
       })
+      
       it('New feed is loaded', function () {
         Array.from(feed.children).forEach((article, index) => {
           expect(article.innerHTML).not.toBe(oldEntries[index])
