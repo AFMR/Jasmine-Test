@@ -33,6 +33,7 @@ $(function () {
     it('url is defined', function () {
       allFeeds.forEach(element => {
         expect(element.url).toBeDefined()
+        expect(element.url.length).not.toBe(0)
       })
     })
     /* TODO: Write a test that loops through each feed
@@ -41,7 +42,7 @@ $(function () {
          */
     it('allFeeds objects has name', function () {
       allFeeds.forEach(element => {
-        expect(element.name).not.toBe(0)
+        expect(element.name.length).not.toBe(0)
       })
     })
   })
@@ -88,13 +89,15 @@ $(function () {
 
     it('Completes its work', function() {
         const feed = document.querySelector('.feed');
-        expect(feed.children.length>0).toBe(true);
+        const entries = feed.querySelector('.entry')
+        expect(entries.innerText.length > 0).toBe(true);
     })
   })
 
   /* TODO: Write a new test suite named "New Feed Selection" */
-  var oldFeed= document.querySelector('.feed').innerHTML;
-  var newFeed= '';
+  var feed = document.querySelector('.feed')
+  var oldEntries = []
+
   describe('New Feed Selection', function() {
 
      /* TODO: Write a test that ensures when a new feed is loaded
@@ -102,13 +105,16 @@ $(function () {
          * Remember, loadFeed() is asynchronous.
          */
     beforeEach(function (done) {
-        loadFeed(0, function() {
-            newFeed = document.querySelector('.feed').innerHTML
-            done()
-        });
-    })
-    it('New feed is loaded', function () {
-        expect(oldFeed).not.toBe(newFeed);
-    })
+        loadFeed(0)
+        Array.from(feed.children).forEach(article => {
+          oldEntries.push(article.innerHTML)
+        })
+        loadFeed(1,done)
+      })
+      it('New feed is loaded', function () {
+        Array.from(feed.children).forEach((article, index) => {
+          expect(article.innerHTML).not.toBe(oldEntries[index])
+        })
+      })
+   })
   })
-})
