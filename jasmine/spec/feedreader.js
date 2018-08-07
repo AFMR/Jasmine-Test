@@ -108,8 +108,8 @@ $(function () {
     beforeEach(function (done) {
         loadFeed(0, function(){
           oldEntriesHtml = feed.innerHTML
+          loadFeed(1, done)
         })
-        loadFeed(1, done)
       })
       
       it('New feed is loaded', function () {
