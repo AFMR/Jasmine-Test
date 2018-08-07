@@ -97,7 +97,7 @@ $(function () {
 
   /*  Write a new test suite named "New Feed Selection" */
   var feed = document.querySelector('.feed')
-  var oldEntries = []
+  var oldEntriesHtml = ''
 
   describe('New Feed Selection', function() {
 
@@ -107,15 +107,13 @@ $(function () {
          */
     beforeEach(function (done) {
         loadFeed(0, function(){
-          oldEntries.push(article.innerHTML)
+          oldEntriesHtml = feed.innerHTML
         })
-        loadFeed(1,done)
+        loadFeed(1, done)
       })
       
       it('New feed is loaded', function () {
-        Array.from(feed.children).forEach((article, index) => {
-          expect(article.innerHTML).not.toBe(oldEntries[index])
-        })
+          expect(oldEntriesHtml).not.toBe(feed.innerHTML)
       })
    })
   })
